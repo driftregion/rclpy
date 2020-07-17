@@ -14,6 +14,7 @@ find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
 find_package(rcl REQUIRED)
 find_package(rcl_action REQUIRED)
+find_package(rcl_lifecycle REQUIRED)
 find_package(rcl_yaml_param_parser REQUIRED)
 find_package(rcutils REQUIRED)
 find_package(rmw REQUIRED)
@@ -124,6 +125,21 @@ configure_python_c_extension_library(rclpy_action)
 ament_target_dependencies(rclpy_action
   "rcl"
   "rcl_action"
+  "rcutils"
+)
+
+add_library(
+  rclpy_lifecycle
+  SHARED src/rclpy/_rclpy_lifecycle.c
+)
+target_link_libraries(rclpy_lifecycle
+  rclpy_common
+)
+
+configure_python_c_extension_library(rclpy_lifecycle)
+ament_target_dependencies(rclpy_lifecycle
+  "rcl"
+  "rcl_lifecycle"
   "rcutils"
 )
 
